@@ -20,7 +20,7 @@ apt-get update
 # I had some issues with chef using the wrong rubygems when both the system version and REE were installed,
 # so I'm going to forgo the system version and jump straight to REE.
 
-apt-get install build-essential zlib1g-dev libssl-dev libreadline5-dev # All required for REE
+apt-get install build-essential zlib1g-dev libssl-dev libreadline5-dev git # All required for REE
 cd /tmp
 curl -O http://files.rubyforge.vm.bytemark.co.uk/emm-ruby/ruby-enterprise-1.8.7-2010.02.tar.gz
 tar xvfz ruby-enterprise-1.8.7-2010.02.tar.gz
@@ -32,6 +32,7 @@ PATH=/opt/ruby-enterprise/bin:$PATH
 gem install chef --no-rdoc --no-ri
 git clone git@github.com:sampierson/chef-repo.git
 cd chef-repo
+git submodule update --init # to get cookbooks. TODO: figure out how to do this during clone
 chef-solo -c solo.rb -j node.json 
 
 # ON NOTEBOOK
